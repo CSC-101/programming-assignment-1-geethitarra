@@ -1,4 +1,5 @@
-from data import Book, Rectangle, Price, Circle, Employee
+from data import Book, Rectangle, Price, Circle, Employee, Point
+import math
 # Write your functions for each part in the space below.
 
 # Part 1
@@ -83,17 +84,35 @@ def books_by_author(author: str, books: list[Book])->list:
 
 
 # Part 7
-def circle_bound(rectangle: Rectangle):
+def circle_bound(rectangle: Rectangle)-> Circle:
+    centerx = (rectangle.top_left.x + rectangle.bottom_right.x)/2
+    centery = (rectangle.top_left.y + rectangle.bottom_right.y)/2
+    center = Point(centerx, centery)
 
+    radiusx = centerx - rectangle.top_left.x
+    radiusy = centery - rectangle.top_left.y
+    radius = math.sqrt(radiusx**2 + radiusy**2)
 
-#The purpose of this function is to
+    return Circle (center, radius)
+
+#The purpose of this function is to take in a rectangle object and return the smallest circle that can encloses the rectangle.
+#This function take in an input of a rectangle object with points defining the top right, left, etc. Then the function finds the center of the two points for the rectangle using their x and y components. Then to find the radius of the circle I found the distance from the center of the rectangle to the corner, breaking it down into x and y components.
+#def circle_bound(rectangle: Rectangle)-> Circle:
+#refer to data_tests.py for testing
 
 # Part 8
 def below_pay_average(employees: list[Employee])->list:
-    average =
+    if len(employees) == 0:
+        return []
+    pay = 0
+    for employee in employees:
+        pay += employee.pay_rate
+
+    average = pay / len(employees)
+    return [employee.name for employee in employees if employee.pay_rate < average]
 
 
-#The purpose of this function is to take use a list of employees to  for
-#
+#The purpose of this function is to take a list of employees with information on their names as well as pay and return a list of their names whose pay are below the average pay for all employees.
+#The function takes in an input of all the employees and their pay. Assuming the list is non empty, it sequentially adds the employee pay to a variable, pay, and then divides it by the number of employees. Finally the function outputs the list of employees whose pay is less than the average.
 #def below_pay_average(employees: list[Employee])->list:
 #refer to data_tests.py for testing
